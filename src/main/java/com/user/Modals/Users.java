@@ -32,7 +32,6 @@ public class Users {
 
 	public Users() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Users(long id, String name, String email, String passowrd, String city, long phoneNo,
