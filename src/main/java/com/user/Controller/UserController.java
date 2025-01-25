@@ -18,28 +18,32 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	UserRepository userRepository;
-	
+
 	@PostMapping("/create")
 	public ResponseEntity<String> registerUser(@RequestBody Users users) {
 		Users existUseremail = userRepository.findByEmail(users.getEmail());
 		if (existUseremail != null) {
-			return new ResponseEntity<>("This Email is already exist",HttpStatus.CONFLICT);
+			return new ResponseEntity<>("This Email is already exist", HttpStatus.CONFLICT);
 		}
-		
+
 		Users existUserphoneno = userRepository.findByPhoneNo(users.getPhoneNo());
 		if (existUserphoneno != null) {
-			return new ResponseEntity<>("This Phone Number is already exist",HttpStatus.CONFLICT);
+			return new ResponseEntity<>("This Phone Number is already exist", HttpStatus.CONFLICT);
 		}
-		
-		return new ResponseEntity<>("User Successfully Added",HttpStatus.CREATED);
+		userService.createUser(users);
+		return new ResponseEntity<>("User Successfully Added", HttpStatus.CREATED);
 	}
 
 	@GetMapping("/login")
 	public ResponseEntity<String> login(@RequestBody Users users) throws Exception {
-		return new ResponseEntity<>("Login Successfull",HttpStatus.ACCEPTED);
+		Users user = userRepository.findByEmail(users.getEmail());
+		if (user != null && user.getPassword().matches(users.getPassword())) {
+			return new ResponseEntity<>("Login Successfull", HttpStatus.ACCEPTED);
+		}
+		return new ResponseEntity<>("Invalid Email Or Password",HttpStatus.BAD_REQUEST);
 	}
 
 }

@@ -1,7 +1,6 @@
 package com.user.Services;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,13 +18,5 @@ public class UserService {
 		users.setCreatedAt(LocalDateTime.now());
 		users.setUpdatedAt(LocalDateTime.now());
 		return userRepository.save(users);
-	}
-
-	public Users loginUser(String email, String password) throws Exception {
-		Users user = userRepository.findByEmail(email);
-		if (user != null && user.getPassword().matches(password)) {
-			return user;
-		}
-		throw new Exception("invalid");
 	}
 }
