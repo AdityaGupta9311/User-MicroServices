@@ -9,4 +9,6 @@ import com.user.Modals.Users;
 public interface UserRepository extends JpaRepository<Users, Long> {
 
 	public Users findByEmail(String email);
+	
+	public Users findByPhoneNo(Long phoneno);
 }
