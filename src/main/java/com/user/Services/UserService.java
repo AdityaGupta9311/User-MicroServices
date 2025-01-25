@@ -27,4 +27,21 @@ public class UserService {
 		userRepository.deleteById(id);
 		return user;
 	}
+	
+	public Users updateUsers(Users users, Long id) {
+		Optional<Users> user = userRepository.findById(id);
+		
+		if(user.isEmpty()) {
+			throw new RuntimeException("User not found with ID: " + id);
+		}
+		
+		Users oldUsers = user.get();
+		
+		if(oldUsers.getCity() != null) {
+			oldUsers.setCity(users.getCity());
+		}
+		
+		return userRepository.save(oldUsers);
+	}
+	
 }

@@ -9,6 +9,7 @@ import com.user.Modals.Users;
 import com.user.Repository.UserRepository;
 import com.user.Services.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,9 +49,14 @@ public class UserController {
 		return new ResponseEntity<>("Invalid Email Or Password",HttpStatus.BAD_REQUEST);
 	}
 	
-	@DeleteMapping("/user/{id}")
-	public Users deleteUser(@PathVariable Long id) {
-		 return userService.deleteUser(id);
+	@DeleteMapping("/user/{userId}")
+	public Users deleteUser(@PathVariable Long userId) {
+		 return userService.deleteUser(userId);
+	}
+	
+	@PutMapping("/user/{userId}")
+	public Users updateUser(@RequestBody Users users,@PathVariable Long userId) {
+		 return userService.updateUsers(users, userId);
 	}
 
 }
