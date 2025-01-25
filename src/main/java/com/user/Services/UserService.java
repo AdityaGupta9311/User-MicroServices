@@ -1,6 +1,7 @@
 package com.user.Services;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,5 +19,12 @@ public class UserService {
 		users.setCreatedAt(LocalDateTime.now());
 		users.setUpdatedAt(LocalDateTime.now());
 		return userRepository.save(users);
+	}
+
+	public Users deleteUser(Long id) {
+		Users user = userRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
+		userRepository.deleteById(id);
+		return user;
 	}
 }
