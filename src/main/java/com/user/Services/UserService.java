@@ -40,6 +40,10 @@ public class UserService {
 		if(oldUsers.getCity() != null) {
 			oldUsers.setCity(users.getCity());
 		}
+		if(oldUsers.getName() != null) {
+			oldUsers.setName(users.getName());
+		}
+		oldUsers.setUpdatedAt(LocalDateTime.now());
 		
 		return userRepository.save(oldUsers);
 	}
