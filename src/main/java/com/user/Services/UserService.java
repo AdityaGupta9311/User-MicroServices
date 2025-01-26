@@ -21,31 +21,38 @@ public class UserService {
 		return userRepository.save(users);
 	}
 
+	public Users getUserById(Long id) {
+		Users user = userRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
+		userRepository.findById(id);
+		return user;
+	}
+
 	public Users deleteUser(Long id) {
 		Users user = userRepository.findById(id)
 				.orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
 		userRepository.deleteById(id);
 		return user;
 	}
-	
+
 	public Users updateUsers(Users users, Long id) {
-		Optional<Users> user = userRepository.findById(id);
-		
-		if(user.isEmpty()) {
+		Optional<Users> u1 = userRepository.findById(id);
+
+		if (u1.isEmpty()) {
 			throw new RuntimeException("User not found with ID: " + id);
 		}
-		
-		Users oldUsers = user.get();
-		
-		if(oldUsers.getCity() != null) {
+
+		Users oldUsers = u1.get();
+
+		if (users.getCity() != null) {
 			oldUsers.setCity(users.getCity());
 		}
-		if(oldUsers.getName() != null) {
+		if (users.getName() != null) {
 			oldUsers.setName(users.getName());
 		}
 		oldUsers.setUpdatedAt(LocalDateTime.now());
-		
+
 		return userRepository.save(oldUsers);
 	}
-	
+
 }

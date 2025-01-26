@@ -1,5 +1,7 @@
 package com.user.Controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,12 +51,17 @@ public class UserController {
 		return new ResponseEntity<>("Invalid Email Or Password",HttpStatus.BAD_REQUEST);
 	}
 	
-	@DeleteMapping("/user/{userId}")
+	@GetMapping("/user/{userId}")
+	public Users getUserByUserById(@PathVariable Long userId) {
+		return userService.getUserById(userId);
+	}
+	
+	@DeleteMapping("/user/delete/{userId}")
 	public Users deleteUser(@PathVariable Long userId) {
 		 return userService.deleteUser(userId);
 	}
 	
-	@PutMapping("/user/{userId}")
+	@PutMapping("/user/update/{userId}")
 	public Users updateUser(@RequestBody Users users,@PathVariable Long userId) {
 		 return userService.updateUsers(users, userId);
 	}
